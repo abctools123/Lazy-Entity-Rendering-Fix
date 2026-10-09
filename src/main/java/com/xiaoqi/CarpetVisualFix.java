@@ -4,8 +4,13 @@ import java.util.Map;
 
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
-import carpet.api.settings.SettingsManager;
+import com.xiaoqi.network.EntityLazyStatePayload;
+import com.xiaoqi.network.SyncVisualFixPayload;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CarpetVisualFix implements ModInitializer, CarpetExtension {
 	public static final String MOD_ID = "carpet-visualfix";
@@ -13,6 +18,15 @@ public class CarpetVisualFix implements ModInitializer, CarpetExtension {
 
 	@Override
 	public void onInitialize() {
+		PayloadTypeRegistry.playS2C().register(SyncVisualFixPayload.ID, SyncVisualFixPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(EntityLazyStatePayload.ID, EntityLazyStatePayload.CODEC);
+
+		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+			ServerPlayerEntity player = handler.player;
+			ServerPlayNetworking.send(player, new SyncVisualFixPayload(CarpetVisualFixSettings.lazyEntityRenderingFix));
+			CarpetVisualFixSettings.sendPlayerNotifications(player);
+		});
+
 		CarpetServer.manageExtension(this);
 	}
 
@@ -31,12 +45,12 @@ public class CarpetVisualFix implements ModInitializer, CarpetExtension {
 		if ("zh_cn".equals(lang)) {
 			return Map.of(
 				"carpet.category.client", "客户端",
-				"carpet.rule.entityRenderingFix.desc", "修复了弱加载区域内实体的动画"
+				"carpet.rule.lazyEntityRenderingFix.desc", "修复了弱加载区域内实体的渲染"
 			);
 		}
 		return Map.of(
 			"carpet.category.client", "client",
-			"carpet.rule.entityRenderingFix.desc", "Fixes entity animations in lazy-loaded chunks"
+			"carpet.rule.lazyEntityRenderingFix.desc", "Fixes entity rendering inside lazy chunks"
 		);
 	}
 }

@@ -3,7 +3,9 @@
 	"package": "com.xiaoqi.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ClientWorldMixin"
+		"ClientPlayNetworkHandlerMixin",
+		"ClientWorldMixin",
+		"TntEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

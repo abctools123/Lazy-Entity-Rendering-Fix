@@ -2,10 +2,11 @@
 	"schemaVersion": 1,
 	"id": "carpet-visualfix",
 	"version": "${version}",
-	"name": "Carpet-VisualFix",
-	"description": "Fixes entity animations in lazy-loaded chunks",
+	"name": "Lazy Entity Rendering Fix",
+	"description": "Fixes entity rendering inside lazy chunks",
 	"authors": [
-		"XSY_xiaoqi"
+		"XSY_xiaoqi",
+		"abctools123"
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/project/carpet-visualfix/",
@@ -34,7 +35,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": "~1.21.10",
+		"minecraft": "~1.21.11",
 		"java": ">=21",
 		"fabric-api": "*",
 		"carpet": "*"
