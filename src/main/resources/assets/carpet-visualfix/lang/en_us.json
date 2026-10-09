@@ -1,6 +1,6 @@
 {
 	"visualfix.category.client": "client",
 	
-	"visualfix.rule.entityRenderingFix.desc": "Fixes entity animations in lazy-loaded chunks",
-	"visualfix.rule.entityRenderingFix.name": "Entity Rendering Fix"
+	"visualfix.rule.lazyEntityRenderingFix.desc": "Fixes entity rendering inside lazy chunks",
+	"visualfix.rule.lazyEntityRenderingFix.name": "Lazy Entity Rendering Fix"
 }
