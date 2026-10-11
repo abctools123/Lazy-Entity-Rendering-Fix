@@ -34,7 +34,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 		cancellable = true
 	)
 	private void onEntityVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo ci) {
-		if (!CarpetVisualFixSettings.lazyEntityRenderingFix || this.world == null) {
+		if (!CarpetVisualFixSettings.isFixEnabled() || this.world == null) {
 			return;
 		}
 
@@ -49,7 +49,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 		at = @At("TAIL")
 	)
 	private void onEntityPositionSync(EntityPositionSyncS2CPacket packet, CallbackInfo ci) {
-		if (!CarpetVisualFixSettings.lazyEntityRenderingFix || this.world == null) {
+		if (!CarpetVisualFixSettings.isFixEnabled() || this.world == null) {
 			return;
 		}
 
@@ -68,7 +68,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 		at = @At("TAIL")
 	)
 	private void onEntityPosition(EntityPositionS2CPacket packet, CallbackInfo ci) {
-		if (!CarpetVisualFixSettings.lazyEntityRenderingFix || this.world == null) {
+		if (!CarpetVisualFixSettings.isFixEnabled() || this.world == null) {
 			return;
 		}
 
@@ -98,12 +98,6 @@ public abstract class ClientPlayNetworkHandlerMixin {
 		entity.setYaw(yaw);
 		entity.setPitch(pitch);
 		entity.setVelocity(Vec3d.ZERO);
-		entity.lastX = entity.getX();
-		entity.lastY = entity.getY();
-		entity.lastZ = entity.getZ();
-		entity.lastRenderX = entity.getX();
-		entity.lastRenderY = entity.getY();
-		entity.lastRenderZ = entity.getZ();
 		entity.resetPosition();
 		if (entity.getInterpolator() != null) {
 			entity.getInterpolator().clear();

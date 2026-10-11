@@ -45,7 +45,7 @@ public abstract class EntityTrackerEntryMixin {
 		this.lastTrackedY = entity.getY();
 		this.lastTrackedZ = entity.getZ();
 		this.coordsInitialized = true;
-		this.lastLazyState = CarpetVisualFixSettings.lazyEntityRenderingFix && isInLazyChunk();
+		this.lastLazyState = CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk();
 	}
 
 	@Inject(
@@ -53,7 +53,7 @@ public abstract class EntityTrackerEntryMixin {
 		at = @At("TAIL")
 	)
 	private void onSendPackets(ServerPlayerEntity player, Consumer<Packet<ClientPlayPacketListener>> sender, CallbackInfo ci) {
-		if (CarpetVisualFixSettings.lazyEntityRenderingFix && isInLazyChunk()) {
+		if (CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk()) {
 			ServerPlayNetworking.send(player, new EntityLazyStatePayload(this.entity.getId(), true));
 		}
 	}
@@ -68,11 +68,11 @@ public abstract class EntityTrackerEntryMixin {
 			this.lastTrackedY = this.entity.getY();
 			this.lastTrackedZ = this.entity.getZ();
 			this.coordsInitialized = true;
-			this.lastLazyState = CarpetVisualFixSettings.lazyEntityRenderingFix && isInLazyChunk();
+			this.lastLazyState = CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk();
 			return;
 		}
 
-		boolean isLazy = CarpetVisualFixSettings.lazyEntityRenderingFix && isInLazyChunk();
+		boolean isLazy = CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk();
 		if (isLazy != this.lastLazyState) {
 			this.lastLazyState = isLazy;
 			this.packetSender.sendToListeners(ServerPlayNetworking.createS2CPacket(new EntityLazyStatePayload(this.entity.getId(), isLazy)));
@@ -94,6 +94,9 @@ public abstract class EntityTrackerEntryMixin {
 			this.lastTrackedX = this.entity.getX();
 			this.lastTrackedY = this.entity.getY();
 			this.lastTrackedZ = this.entity.getZ();
+			this.entity.velocityDirty = false;
+		} else {
+			this.entity.velocityDirty = false;
 		}
 	}
 
@@ -105,7 +108,7 @@ public abstract class EntityTrackerEntryMixin {
 		)
 	)
 	private void onSendToListeners(EntityTrackerEntry.TrackerPacketSender sender, Packet<? super ClientPlayPacketListener> packet) {
-		if (CarpetVisualFixSettings.lazyEntityRenderingFix && isInLazyChunk()) {
+		if (CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk()) {
 			// Suppress relative delta movement and velocity updates that cause jitter,
 			// while allowing absolute position sync (EntityPositionSyncS2CPacket) and metadata to pass through.
 			if (packet instanceof EntityS2CPacket || packet instanceof EntityVelocityUpdateS2CPacket) {
@@ -123,7 +126,7 @@ public abstract class EntityTrackerEntryMixin {
 		)
 	)
 	private void onSendToSelfAndListeners(EntityTrackerEntry.TrackerPacketSender sender, Packet<? super ClientPlayPacketListener> packet) {
-		if (CarpetVisualFixSettings.lazyEntityRenderingFix && isInLazyChunk()) {
+		if (CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk()) {
 			if (packet instanceof EntityVelocityUpdateS2CPacket) {
 				return;
 			}

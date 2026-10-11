@@ -16,7 +16,7 @@ public class CarpetVisualFixClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(SyncVisualFixPayload.ID, (payload, context) -> {
 			context.client().execute(() -> {
 				CarpetVisualFixSettings.lazyEntityRenderingFix = payload.enabled();
-				LOGGER.info("[VisualFix-Client] Received sync from server: lazyEntityRenderingFix = {}", payload.enabled());
+				LOGGER.info("[VisualFix-Client] Received sync from server: fixEnabled = {}", payload.enabled());
 			});
 		});
 

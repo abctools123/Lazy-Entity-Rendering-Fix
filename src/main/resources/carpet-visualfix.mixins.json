@@ -2,6 +2,7 @@
 	"required": true,
 	"package": "com.xiaoqi.mixin",
 	"compatibilityLevel": "JAVA_21",
+	"refmap": "carpet-visualfix-refmap.json",
 	"mixins": [
 		"EntityMixin",
 		"EntityTrackerEntryMixin"

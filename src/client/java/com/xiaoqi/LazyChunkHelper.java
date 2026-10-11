@@ -9,17 +9,9 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.WorldChunk;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LazyChunkHelper {
-	private static final Logger LOGGER = LoggerFactory.getLogger("VisualFix-Client");
-	private static final Map<Integer, Long> LAST_LOGGED = new ConcurrentHashMap<>();
 	private static final Int2BooleanOpenHashMap PENDING_STATES = new Int2BooleanOpenHashMap();
-	private static final long LOG_INTERVAL_MS = 10000L;
 
 	public static synchronized void setEntityLazy(int entityId, boolean isLazy, ClientWorld world) {
 		if (world != null) {
@@ -34,22 +26,6 @@ public class LazyChunkHelper {
 
 	public static synchronized void onDisconnected() {
 		PENDING_STATES.clear();
-		LAST_LOGGED.clear();
-	}
-
-	private static void logFreezing(Entity entity, String source) {
-		long now = System.currentTimeMillis();
-		Long lastLog = LAST_LOGGED.get(entity.getId());
-		if (lastLog == null || (now - lastLog) > LOG_INTERVAL_MS) {
-			LAST_LOGGED.put(entity.getId(), now);
-			LOGGER.info("[VisualFix-Client] Freezing entity {} at {} (Lazy status confirmed by {})",
-				entity.getName().getString(),
-				entity.getBlockPos().toShortString(),
-				source);
-			if (LAST_LOGGED.size() > 500) {
-				LAST_LOGGED.entrySet().removeIf(e -> (now - e.getValue()) > LOG_INTERVAL_MS * 2);
-			}
-		}
 	}
 
 	public static boolean isLazyChunk(int chunkX, int chunkZ) {
@@ -86,9 +62,6 @@ public class LazyChunkHelper {
 		}
 
 		if (entity instanceof LazyEntityTracker tracker && tracker.carpetVisualFix$isLazy()) {
-			if (CarpetVisualFixSettings.lazyEntityRenderingFix) {
-				logFreezing(entity, "ServerSync");
-			}
 			return true;
 		}
 
@@ -98,13 +71,7 @@ public class LazyChunkHelper {
 		}
 
 		ChunkPos entityChunkPos = entity.getChunkPos();
-		boolean inLazy = isLazyChunk(entityChunkPos.x, entityChunkPos.z);
-
-		if (inLazy && CarpetVisualFixSettings.lazyEntityRenderingFix) {
-			logFreezing(entity, "fallback");
-		}
-
-		return inLazy;
+		return isLazyChunk(entityChunkPos.x, entityChunkPos.z);
 	}
 	
 	private static boolean canPlayerLoadChunks(ClientPlayerEntity player) {
