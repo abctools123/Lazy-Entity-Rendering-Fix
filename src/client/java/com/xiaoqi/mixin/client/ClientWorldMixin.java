@@ -24,26 +24,15 @@ public abstract class ClientWorldMixin {
 			return;
 		}
 		
-		if (!CarpetVisualFixSettings.lazyEntityRenderingFix) {
+		if (!CarpetVisualFixSettings.isFixEnabled()) {
 			return;
 		}
 		
 		if (LazyChunkHelper.isInLazyChunk(entity)) {
 			entity.setVelocity(Vec3d.ZERO);
-			entity.lastX = entity.getX();
-			entity.lastY = entity.getY();
-			entity.lastZ = entity.getZ();
-			entity.lastRenderX = entity.getX();
-			entity.lastRenderY = entity.getY();
-			entity.lastRenderZ = entity.getZ();
-			entity.resetPosition();
 
 			if (entity.getInterpolator() != null) {
 				entity.getInterpolator().clear();
-			}
-
-			if (entity instanceof TntEntity tnt) {
-				tnt.setFuse(tnt.getFuse());
 			}
 
 			ci.cancel();
@@ -60,19 +49,12 @@ public abstract class ClientWorldMixin {
 			return;
 		}
 
-		if (!CarpetVisualFixSettings.lazyEntityRenderingFix) {
+		if (!CarpetVisualFixSettings.isFixEnabled()) {
 			return;
 		}
 
 		if (LazyChunkHelper.isInLazyChunk(passenger)) {
 			passenger.setVelocity(Vec3d.ZERO);
-			passenger.lastX = passenger.getX();
-			passenger.lastY = passenger.getY();
-			passenger.lastZ = passenger.getZ();
-			passenger.lastRenderX = passenger.getX();
-			passenger.lastRenderY = passenger.getY();
-			passenger.lastRenderZ = passenger.getZ();
-			passenger.resetPosition();
 
 			if (passenger.getInterpolator() != null) {
 				passenger.getInterpolator().clear();

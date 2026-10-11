@@ -18,6 +18,10 @@ public class CarpetVisualFixSettings {
 	)
 	public static boolean lazyEntityRenderingFix = true;
 
+	public static boolean isFixEnabled() {
+		return lazyEntityRenderingFix;
+	}
+
 	public static class LazyEntityRenderingFixValidator extends Validator<Boolean> {
 		@Override
 		public Boolean validate(ServerCommandSource source, CarpetRule<Boolean> currentRule, Boolean newValue, String string) {
@@ -34,7 +38,7 @@ public class CarpetVisualFixSettings {
 	}
 
 	public static void sendPlayerNotifications(ServerPlayerEntity player) {
-		if (lazyEntityRenderingFix) {
+		if (isFixEnabled()) {
 			player.sendMessage(Text.literal("§a[LazyEntityRenderingFix] Active: Lazy entity rendering fix enabled."), false);
 		}
 	}

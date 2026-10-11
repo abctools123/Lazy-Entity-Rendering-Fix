@@ -14,15 +14,8 @@ public abstract class TntEntityMixin {
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	private void onTick(CallbackInfo ci) {
 		TntEntity tnt = (TntEntity) (Object) this;
-		if (tnt.getEntityWorld().isClient() && CarpetVisualFixSettings.lazyEntityRenderingFix && LazyChunkHelper.isInLazyChunk(tnt)) {
+		if (tnt.getEntityWorld().isClient() && CarpetVisualFixSettings.isFixEnabled() && LazyChunkHelper.isInLazyChunk(tnt)) {
 			tnt.setVelocity(Vec3d.ZERO);
-			tnt.lastX = tnt.getX();
-			tnt.lastY = tnt.getY();
-			tnt.lastZ = tnt.getZ();
-			tnt.lastRenderX = tnt.getX();
-			tnt.lastRenderY = tnt.getY();
-			tnt.lastRenderZ = tnt.getZ();
-			tnt.resetPosition();
 			ci.cancel();
 		}
 	}
