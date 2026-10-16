@@ -1,6 +1,18 @@
 {
-	"visualfix.category.client": "客户端",
-	
-	"visualfix.rule.lazyEntityRenderingFix.desc": "修复了弱加载区域内实体的渲染",
-	"visualfix.rule.lazyEntityRenderingFix.name": "弱加载实体渲染修复"
+	"carpet.category.client": "客户端",
+
+	"carpet.rule.lazyEntityRenderingFix.name": "弱加载实体渲染修复",
+	"carpet.rule.lazyEntityRenderingFix.desc": "修复了弱加载区域内实体的渲染",
+
+	"carpet.rule.tntMotionArrow.name": "TNT 动量箭头",
+	"carpet.rule.tntMotionArrow.desc": "在 F3+B 模式下绘制 TNT 的动量箭头",
+
+	"carpet.rule.tntNoFlashScale.name": "禁用 TNT 闪烁与缩放",
+	"carpet.rule.tntNoFlashScale.desc": "禁用 TNT 爆炸前的白闪和缩放效果",
+
+	"carpet.rule.tntFuseLabel.name": "TNT 剩余刻数标签",
+	"carpet.rule.tntFuseLabel.desc": "显示 TNT 爆炸前的剩余刻数标签（自动合并 0.05 格内的同引信 TNT 并显示数量）",
+
+	"carpet.rule.hideFacingArrow.name": "隐藏朝向箭头",
+	"carpet.rule.hideFacingArrow.desc": "在 F3+B 模式下隐藏实体的朝向箭头"
 }

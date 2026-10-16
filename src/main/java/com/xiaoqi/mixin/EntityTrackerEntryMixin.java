@@ -2,6 +2,7 @@ package com.xiaoqi.mixin;
 
 import com.xiaoqi.CarpetVisualFixSettings;
 import com.xiaoqi.network.EntityLazyStatePayload;
+import com.xiaoqi.util.ServerF3BTracker;
 import com.xiaoqi.util.ServerLazyChunkHelper;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
@@ -128,6 +129,12 @@ public abstract class EntityTrackerEntryMixin {
 	private void onSendToSelfAndListeners(EntityTrackerEntry.TrackerPacketSender sender, Packet<? super ClientPlayPacketListener> packet) {
 		if (CarpetVisualFixSettings.isFixEnabled() && isInLazyChunk()) {
 			if (packet instanceof EntityVelocityUpdateS2CPacket) {
+				return;
+			}
+		}
+		if (this.entity instanceof net.minecraft.entity.TntEntity && (CarpetVisualFixSettings.isFixEnabled() || CarpetVisualFixSettings.tntFuseLabel)) {
+			if (packet instanceof net.minecraft.network.packet.s2c.play.EntityTrackerUpdateS2CPacket) {
+				sender.sendToListenersIf(packet, player -> !ServerF3BTracker.hasF3B(player));
 				return;
 			}
 		}

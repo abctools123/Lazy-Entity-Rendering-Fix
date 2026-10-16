@@ -1,6 +1,18 @@
 {
-	"visualfix.category.client": "client",
-	
-	"visualfix.rule.lazyEntityRenderingFix.desc": "Fixes entity rendering inside lazy chunks",
-	"visualfix.rule.lazyEntityRenderingFix.name": "Lazy Entity Rendering Fix"
+	"carpet.category.client": "client",
+
+	"carpet.rule.lazyEntityRenderingFix.name": "Lazy Entity Rendering Fix",
+	"carpet.rule.lazyEntityRenderingFix.desc": "Fixes entity rendering inside lazy chunks",
+
+	"carpet.rule.tntMotionArrow.name": "TNT Motion Arrow",
+	"carpet.rule.tntMotionArrow.desc": "Draws a momentum arrow for TNT in F3+B mode",
+
+	"carpet.rule.tntNoFlashScale.name": "TNT No Flash and Scale",
+	"carpet.rule.tntNoFlashScale.desc": "Disables the TNT flashing and growing visual effect before explosion",
+
+	"carpet.rule.tntFuseLabel.name": "TNT Fuse Label",
+	"carpet.rule.tntFuseLabel.desc": "Shows a label with remaining ticks before TNT explodes (batches TNT within 0.05 blocks with count)",
+
+	"carpet.rule.hideFacingArrow.name": "Hide Facing Arrow",
+	"carpet.rule.hideFacingArrow.desc": "Hides entity facing direction arrows in F3+B mode"
 }
