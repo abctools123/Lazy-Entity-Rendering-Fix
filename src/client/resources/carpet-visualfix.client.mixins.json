@@ -6,7 +6,10 @@
 	"client": [
 		"ClientPlayNetworkHandlerMixin",
 		"ClientWorldMixin",
-		"TntEntityMixin"
+		"DebugHudProfileMixin",
+		"EntityHitboxDebugRendererMixin",
+		"TntEntityMixin",
+		"TntEntityRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

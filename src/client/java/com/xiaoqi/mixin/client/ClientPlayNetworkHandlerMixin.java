@@ -97,7 +97,6 @@ public abstract class ClientPlayNetworkHandlerMixin {
 		entity.setPosition(pos);
 		entity.setYaw(yaw);
 		entity.setPitch(pitch);
-		entity.setVelocity(Vec3d.ZERO);
 		entity.resetPosition();
 		if (entity.getInterpolator() != null) {
 			entity.getInterpolator().clear();
